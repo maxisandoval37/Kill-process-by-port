@@ -2,6 +2,15 @@
 color 0A
 title Kill-Process-By-Port
 
+:: Check if the script has administrator privileges
+net session >nul 2>&1
+if %errorlevel% neq 0 (
+    echo The script requires administrator privileges.
+    echo Requesting permissions...
+    powershell -Command "Start-Process '%~f0' -Verb RunAs"
+    exit /b
+)
+
 :main
 echo.
 echo                  _________-----_____
